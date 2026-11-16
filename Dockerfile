@@ -6,18 +6,16 @@ RUN npm ci || npm install
 COPY frontend/ ./
 RUN npm run build
 
-# Stage 2: Python backend + static serving
+# Stage 2: Python backend + uv + static serving
 FROM python:3.11-slim
 WORKDIR /app
 
-# Install system dependencies
-RUN apt-get update && apt-get install -y --no-install-recommends \
-    build-essential \
-    && rm -rf /var/lib/apt/lists/*
+# Copy uv from astral-sh
+COPY --from=ghcr.io/astral-sh/uv:latest /uv /uvx /bin/
 
-# Install Python dependencies
+# Install Python dependencies with uv (ultra-fast, low RAM)
 COPY requirements.txt ./
-RUN pip install --no-cache-dir -r requirements.txt fastapi uvicorn
+RUN uv pip install --system --no-cache -r requirements.txt
 
 # Copy application code
 COPY backend/ ./backend/
@@ -37,4 +35,4 @@ USER appuser
 
 EXPOSE 7860
 
-CMD ["uvicorn", "backend.main:app", "--host", "0.0.0.0", "--port", "7860"]
+CMD ["sh", "-c", "uvicorn backend.main:app --host 0.0.0.0 --port ${PORT:-7860}"]

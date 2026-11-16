@@ -1,28 +1,9 @@
-# Ragas: dataset-level scoring (ragas_eval.py, tests/test_rag_gate.py)
-ragas>=0.4.0,<0.5.0
-datasets>=2.19.0
-pandas>=2.0.0
-
-# Upper bound required, and not by choice. ragas 0.4.x imports
-# `langchain_community.chat_models.vertexai` unguarded at module load, and
-# langchain-community 0.4.0 removed that path. ragas declares the dependency
-# with no upper bound, so an unpinned `pip install ragas` resolves to a
-# combination where `import ragas` raises ModuleNotFoundError before any of
-# your code runs. Drop this pin once ragas guards that import.
-langchain-community>=0.3.0,<0.4.0
-
-# DeepEval: test-case-level scoring (deepeval_eval.py)
-deepeval>=2.0.0
-
-# Generation for the reference pipeline, and the default judge backend for
-# both Ragas and DeepEval. Both read OPENAI_API_KEY from the environment.
-openai>=1.30.0
-
-# The CI gate itself
-pytest>=8.0.0
-
-# Demo console API (backend/main.py)
-fastapi>=0.110.0
-uvicorn[standard]>=0.29.0
-
-# scripts/extract_questions.py is standard library only, on purpose.
+deepeval==4.3.4
+openai==3.3.0
+fastapi==0.163.1
+uvicorn==0.54.0
+pydantic==2.14.3
+pytest==9.2.0
+ragas==0.4.4
+requests==2.34.2
+tiktoken==0.14.0
