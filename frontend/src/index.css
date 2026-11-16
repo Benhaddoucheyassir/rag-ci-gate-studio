@@ -1,0 +1,28 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer utilities {
+  .tabular-nums {
+    font-variant-numeric: tabular-nums;
+  }
+}
+
+.gate-chip {
+  font-family: var(--font-mono, "JetBrains Mono");
+  font-size: 11px;
+  letter-spacing: 0.08em;
+  padding: 2px 10px;
+  border-radius: 999px;
+  font-weight: 600;
+}
+.gate-chip.pass {
+  color: #059669;
+  background: #ECFDF5;
+  border: 1px solid #D1FAE5;
+}
+.gate-chip.blocked {
+  color: #E11D48;
+  background: #FFF1F2;
+  border: 1px solid #FFE4E6;
+}
